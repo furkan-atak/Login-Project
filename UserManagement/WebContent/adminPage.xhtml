@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+	<h:head>ADMIN PAGE</h:head>
+	<h:body>
+	<h:form>
+		<h:inputText  a:placeholder="Adı" value="#{usrBean.firstName}" />
+		<h:inputText  a:placeholder="Soyadı" value="#{usrBean.lastName}" /><br/>
+		<h:inputText  a:placeholder="Mail Adresi" value = "#{usrBean.mailAddres}" />
+		<h:inputText  a:placeholder="Kullanıcı Tipi" value = "#{usrBean.type}"/><dir/>
+			
+			<h:commandButton  value="Sign Up">
+           		<f:ajax execute="firstName lastName inMail" render="acceptance"/>
+           </h:commandButton><dir/>   
+           		<h:outputLabel id="acceptance" value="#{usrBean.login()}" /> 
+		   <h:commandButton action="#{usrBean.makeTableVisible()}" value="Show Table">
+           		<f:ajax execute="@this" render="@form"/>
+           </h:commandButton>
+           <p:dataTable id="myTable" value="#{usrBean.listOfUsers()}" var="user" selection="#{usrBean.selectedUser}" 
+             rendered="#{usrBean.showTable}" selectionMode="single"  rowKey="#{user.id}">  
+			<p:column>  
+				<f:facet name="header">-ID-</f:facet>  
+				<h:outputText value="#{user.id}"/>  
+			</p:column>  
+			<p:column>  
+			        <f:facet name="header">-First Name-</f:facet>  
+			        <h:outputText value="#{user.firstName}"/>  
+			</p:column>  
+			<p:column>  
+			        <f:facet name="header">-Last Name-</f:facet>  
+					<h:outputText value="#{user.lastName}"/>  
+			</p:column>
+			<p:column>  
+			        <f:facet name="header">-Mail Address-</f:facet>  
+					<h:outputText value="#{user.mailAddress}"/>  
+			</p:column>
+			<p:column>  
+			        <f:facet name="header">-Kullanıcı Türü-</f:facet>  
+					<h:outputText value="#{user.type}"/>  
+			</p:column>   
+    		</p:dataTable> <br/><br/>
+		
+	</h:form>
+	</h:body>
+</html>

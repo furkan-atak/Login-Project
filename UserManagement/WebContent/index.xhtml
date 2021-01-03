@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<style>
+		.Bimage{background-image:url("resources/images/background.jpg");
+				background-repeat: no-repeat;
+				background-size: cover;
+		}
+	</style>
+</h:head> 
+<h:body styleClass="Bimage">
+     <h:form id="form">
+           <h:panelGrid  id="pane" style="margin-left: 45%; margin-right:45%;margin-top:150px; text-align: center;">
+           
+           <h6><p:outputLabel value="LOGIN" style="font-size: 60px; font-weight: bold;"/><br/><br/></h6>
+           <h2><h:outputText value="Name: " style="color:white;"/></h2>
+           <h:inputText id = "firstName" a:placeholder="a name" value = "#{usrBean.firstName}" style="background-color:black; color:white;"/>
+           
+           <h2><h:outputText value="Surname: " style="color:white;"/></h2>
+           <h:inputText id = "lastName" a:placeholder="a surname" value = "#{usrBean.lastName}" style="background-color:black; color:white;"/>
+           
+           <h2><h:outputText value="Mail Address: " style="color:white;"/></h2>
+           <h:inputText id = "inMail" a:placeholder="a mail Address" value = "#{usrBean.mailAddres}" style="background-color:black; color:white;"  />
+            <h2><h:outputText value="User Name: " style="color:white;"/></h2>
+           <h:inputText id = "UserName" a:placeholder="user name" value = "#{usrBean.userName}" style="background-color:black; color:white;"/>
+            <h2><h:outputText value="Password " style="color:white;"/></h2>
+           <h:inputSecret id = "Password" a:placeholder="******" value = "#{usrBean.password}" style="background-color:black; color:white;"/>
+           <h:commandButton  value="Sign Up">
+           		<f:ajax execute="firstName lastName inMail UserName Password" render="acceptance"/>
+           </h:commandButton><br/>   
+           		<h:outputLabel id="acceptance" value="#{usrBean.login()}" /> 
+           	
+            <h:commandButton  value="Sign In">
+           		<f:ajax execute="firstName lastName inMail" render="registered"/>
+           </h:commandButton>
+           <h:outputLabel id="registered" value="#{usrBean.registeredUsr()}" /> 	    		
+           </h:panelGrid>            
+           <h:commandButton action="#{usrBean.makeTableVisible()}" value="Show Table">
+           		<f:ajax execute="@this" render="@form"/>
+           </h:commandButton>
+           <p:dataTable id="myTable" value="#{usrBean.listOfUsers()}" var="user" selection="#{usrBean.selectedUser}" 
+             rendered="#{usrBean.showTable}" selectionMode="single"  rowKey="#{user.id}">  
+			<p:column>  
+				<f:facet name="header">-ID-</f:facet>  
+				<h:outputText value="#{user.id}"/>  
+			</p:column>  
+			<p:column>  
+			        <f:facet name="header">-First Name-</f:facet>  
+			        <h:outputText value="#{user.firstName}"/>  
+			</p:column>  
+			<p:column>  
+			        <f:facet name="header">-Last Name-</f:facet>  
+					<h:outputText value="#{user.lastName}"/>  
+			</p:column>
+			<p:column>  
+			        <f:facet name="header">-Mail Address-</f:facet>  
+					<h:outputText value="#{user.mailAddress}"/>  
+			</p:column>  
+    		</p:dataTable> <br/><br/>
+    		<h:commandButton value="Delete" /><br/>
+    		
+     </h:form>
+        
+  
+    	
+</h:body> 
+</html>
